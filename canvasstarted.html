@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>canvasgo</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #canvas{
+                display: block;
+            }
+            html, body, #wrapper{
+                width: 100%;
+                height: 100%
+            }
+        </style>
+    </head>
+    <body bgcolor="black">
+        <!--<style type="text/css">
+            canvas { border: 1px solid black; }
+          </style>-->
+        <div id="wrapper">
+            <canvas id="maincanvas" width="" height=""></canvas>
+        </div>
+        <script type="application/javascript">
+            document.body.requestFullscreen();
+            let wrapper =null;
+            let canvas=null;
+            let g=null;
+            let W=null;
+            let H=null;
+            let frame=0;
+            let $id = function(id){ return document.getElementById(id); };
+            
+            function ResizeCanvas(){
+                // キャンバスのサイズを再設定
+                W=wrapper.offsetWidth
+                H=wrapper.offsetHeight
+                canvas.width = W;
+                canvas.height =  H;
+            }
+
+            /*
+            * リサイズ時
+            */
+            window.addEventListener("resize", function(){
+                ResizeCanvas();
+            });
+
+            /*
+            * 起動処理
+            */
+            window.onload = function init(){
+                // キャンバスの親要素情報取得（親要素が無いとキャンバスのサイズが画面いっぱいに表示できないため）
+                wrapper = document.getElementById("wrapper");
+                // キャンバス情報取得
+                canvas = document.getElementById("maincanvas");
+                g = canvas.getContext("2d");
+
+                // キャンバスをウインドウサイズにする
+                ResizeCanvas();
+            };
+            
+            window.addEventListener('click', switchFullScreen);
+            function switchFullScreen(event) {
+                //alert("aaa")
+
+                if( event.key === "f" || event.type === "click" ) {
+
+                // フルスクリーン表示なら解除する
+                    if( checkFullScreen() ) {
+
+                        if( document.exitFullscreen ) {
+                            document.exitFullscreen();
+                        } else if( document.mozCancelFullScreen ) {
+                            document.mozCancelFullScreen();
+                        } else if( document.webkitCancelFullScreen ) {
+                            document.webkitCancelFullScreen();
+                        } else if( document.msExitFullscreen ) {
+                            document.msExitFullscreen();
+                        }
+
+                // 通常表示ならフルスクリーン表示位にする
+                    } else {
+
+                        if( document.body.requestFullscreen ) {
+                            document.body.requestFullscreen();
+                        } else if( document.body.mozRequestFullScreen ) {
+                            document.body.mozRequestFullScreen();
+                        } else if( document.body.webkitRequestFullscreen ) {
+                            document.body.webkitRequestFullscreen();
+                        } else if( document.body.msRequestFullscreen ) {
+                            document.body.msRequestFullscreen();
+                        }
+                    }
+                }
+            }
+            function checkFullScreen() {
+
+                var fullscreen_flag = false;
+
+                if( document.fullscreenElement || document.mozFullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement ) {
+                    fullscreen_flag = true;
+                }
+
+                return fullscreen_flag;
+            }
+
+            function rangerand(mn,mx) {
+                return Math.floor( Math.random() * (mx + 1 - mn) ) + mn
+            }
+
+            function draw() {
+                //var canvas=document.getElementById("maincanvas");
+                //alert("hello");
+                if (canvas.getContext) {
+                    var ctx=canvas.getContext("2d");
+                    //処理
+                    //await 10;
+                    //ctx.clearRect(0,0,W,H);
+                    ctx.fillStyle="rgb(60,"+rangerand(60,130)+",60)";
+                    ctx.fillRect(0,0,W,H);
+                    var str = 'テキスト';
+                    ctx.strokeStyle = 'black';              // 枠線の色
+                    ctx.fillStyle = 'white';              // 塗りつぶしの色
+                    ctx.font = '100px メイリオ bold';  // フォント
+                    ctx.textAlign = 'left';               // 配置
+                    ctx.strokeText(frame+"フレーム", 100, 250);
+                    ctx.fillText(frame, 100, 250);
+                    ctx.font = '40px メイリオ bold';
+                    ctx.fillText("click somewhere = fullscreen", 100, 450);
+                    frame++;
+
+                }
+                //window.requestAnimationFrame(draw);
+            }
+
+            setInterval(draw,1000/60);
+            //window.requestAnimationFrame(draw);
+        </script>
+    </body>
+</html>
