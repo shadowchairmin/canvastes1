@@ -120,6 +120,9 @@
                 return Math.floor( Math.random() * (mx + 1 - mn) ) + mn
             }
 
+            var im1 = new Image();
+            im1.src="Icon7.png";
+            
             function draw() {
                 //var canvas=document.getElementById("maincanvas");
                 //alert("hello");
@@ -138,7 +141,8 @@
                     ctx.fillText(frame, 100, 250);
                     ctx.strokeText(frame+"フレーム", 100, 250);
                     ctx.font = '40px メイリオ bold';
-                    ctx.fillText("click somewhere = Fullscreen!", 100, 450);
+                    ctx.fillText("click somewhere = Fullscreen!!", 100, 450);
+                    ctx.drawImage(im1,500,20);
                     frame++;
 
                 }
