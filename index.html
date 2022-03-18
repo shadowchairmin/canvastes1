@@ -8,7 +8,7 @@
         <meta property="og:image" content="Icon7.png" />
         <meta name="twitter:title" content="Javascriptてすと" />
         <meta name="twitter:description" content="画面を描画したり全画面にしたりするてすと" />
-        <meta name="twitter:image" content="Icon7.png" />
+        <meta name="twitter:image" content="https://raw.githubusercontent.com/shadowchairmin/canvastes1/main/Icon7.png" />
         <meta charset="UTF-8">
         <title>canvasgo</title>
         <style>
@@ -43,31 +43,20 @@
             let $id = function(id){ return document.getElementById(id); };
             
             function ResizeCanvas(){
-                // キャンバスのサイズを再設定
                 W=wrapper.offsetWidth
                 H=wrapper.offsetHeight
                 canvas.width = W;
                 canvas.height =  H;
             }
 
-            /*
-            * リサイズ時
-            */
             window.addEventListener("resize", function(){
                 ResizeCanvas();
             });
 
-            /*
-            * 起動処理
-            */
             window.onload = function init(){
-                // キャンバスの親要素情報取得（親要素が無いとキャンバスのサイズが画面いっぱいに表示できないため）
                 wrapper = document.getElementById("wrapper");
-                // キャンバス情報取得
                 canvas = document.getElementById("maincanvas");
                 g = canvas.getContext("2d");
-
-                // キャンバスをウインドウサイズにする
                 ResizeCanvas();
             };
             
@@ -76,8 +65,6 @@
                 //alert("aaa")
 
                 if( event.key === "f" || event.type === "click" ) {
-
-                // フルスクリーン表示なら解除する
                     if( checkFullScreen() ) {
 
                         if( document.exitFullscreen ) {
@@ -90,7 +77,6 @@
                             document.msExitFullscreen();
                         }
 
-                // 通常表示ならフルスクリーン表示位にする
                     } else {
 
                         if( document.body.requestFullscreen ) {
